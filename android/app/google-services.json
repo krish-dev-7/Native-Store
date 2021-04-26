@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "818003468180",
+    "project_id": "native-store-c3ca3",
+    "storage_bucket": "native-store-c3ca3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818003468180:android:f950f85d55cf791c70f981",
+        "android_client_info": {
+          "package_name": "com.example.nativestore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818003468180-bq15s1q6q47u0q6h6c9rtcq0r60gfqok.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nativestore",
+            "certificate_hash": "9dcbee8e67dfd9f788262e36f7239a2c30ec5b73"
+          }
+        },
+        {
+          "client_id": "818003468180-2770h8408p37llv2c7plfon32m33m17j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuo9GbMZFPfUVlQDI_BSxhUAHvbfdD1O0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "818003468180-2770h8408p37llv2c7plfon32m33m17j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
