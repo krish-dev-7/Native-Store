@@ -4,13 +4,12 @@ A new Flutter application.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This application is developed to decrease the crowd in stores during pandemic situations,
+by order the items from our native stores.
 
-A few resources to get you started if this is your first Flutter project:
+USERS:
+ --> shopkeepers => to edit items to database and provide items to customers
+ --> customers => choose shops from map, or list of shops and order the items there by single click !
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- [INSTAGRAM](https://instagram.com/krish_krush)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
