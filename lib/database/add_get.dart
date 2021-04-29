@@ -55,7 +55,7 @@ class UserManagement {
     }, merge: true).then((val) {
       Navigator.of(context).pop();
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (BuildContext context) => homePage()));
+          MaterialPageRoute(builder: (BuildContext context) => HomePage()));
     }).catchError((er) {
       print(er);
     });
@@ -73,7 +73,7 @@ class UserManagement {
     }).then((val) {
       Navigator.of(context).pop();
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (BuildContext context) => homePage()));
+          MaterialPageRoute(builder: (BuildContext context) => HomePage()));
     }).catchError((er) {
       print(er);
     });

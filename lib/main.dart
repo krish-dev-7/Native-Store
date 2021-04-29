@@ -17,6 +17,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: routePage(),
+      theme: new ThemeData(
+        canvasColor: Colors.transparent,
+      ),
     );
   }
 }
@@ -66,7 +69,7 @@ class routePageState extends State<routePage> {
   Widget build(BuildContext context) {
     return isLoggedin == true
         ? (type == 2)
-            ? homePage()
+            ? HomePage()
             : ShopHomePage()
         : loginPage();
   }

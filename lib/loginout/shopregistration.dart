@@ -1,12 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nativestore/config.dart';
 import 'package:nativestore/database/add_get.dart';
-import 'package:location/location.dart';
-import 'package:nativestore/homepage.dart';
 import 'package:nativestore/location_handler.dart';
 
 import '../shophomepage.dart';

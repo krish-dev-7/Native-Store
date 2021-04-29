@@ -49,6 +49,7 @@ class loginPageState extends State<loginPage> {
                             SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
                             prefs.setString('_spemail', value.email);
+                            prefs.setString('cust_name', value.displayName);
                             y = await Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -74,14 +75,6 @@ class loginPageState extends State<loginPage> {
                                           TextStyle(color: dc, fontSize: 25)))
                             ],
                           ))),
-                  Text(
-                    'Welcome',
-                    style: TextStyle(
-                        color: dc,
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic),
-                  ),
                 ],
               ),
             ),

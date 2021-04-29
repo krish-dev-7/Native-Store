@@ -7,6 +7,7 @@ import 'package:nativestore/config.dart';
 import 'package:nativestore/database/add_get.dart';
 import 'package:location/location.dart';
 import 'package:nativestore/location_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../homepage.dart';
 
@@ -114,24 +115,31 @@ class _CustRegState extends State<CustReg> {
               user: widget.username,
             ),
             Container(
-                height: 60,
-                width: 90,
+                height: 70,
+                width: 120,
                 child: OutlineButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => homePage()));
+                  onPressed: () async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.setString('cust_number', number);
+                    prefs.setString('cust_Oname', name);
                     print(widget.pos);
                     setState(() {
                       print("-->${widget.username.email}");
                       UserManagement().custAddNewUser(
-                          widget.pos,
-                          widget.address,
-                          widget.username,
-                          name,
-                          number,
-                          context);
+                        widget.pos,
+                        widget.address,
+                        widget.username,
+                        name,
+                        number,
+                        context,
+                      );
+                    });
+                    Future.delayed(Duration.zero, () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => HomePage()));
                     });
                   },
                   child: Text(
