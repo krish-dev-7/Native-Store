@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nativestore/homepage.dart';
 
+import '../shophomepage.dart';
+
 class ShopAddUser extends StatelessWidget {
   final String fullName;
   final String company;
@@ -44,18 +46,19 @@ class UserManagement {
     Firestore.instance
         .collection('/shopkeepers')
         .document('${user.email}')
-        .setData({
+        .updateData({
       'Shop Name': sname,
       'Shop Type': stype,
       'number': num,
+      'pic url': user.photoUrl,
       'name': name,
       'user name': user.displayName,
       'email': user.email,
       // 'items': {},
-    }, merge: true).then((val) {
+    }).then((val) {
       Navigator.of(context).pop();
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (BuildContext context) => HomePage()));
+          MaterialPageRoute(builder: (BuildContext context) => ShopHomePage()));
     }).catchError((er) {
       print(er);
     });
@@ -70,6 +73,7 @@ class UserManagement {
       'name': name,
       'address': address,
       'user name': user.displayName,
+      'pic url': user.photoUrl,
     }).then((val) {
       Navigator.of(context).pop();
       Navigator.pushReplacement(context,

@@ -5,6 +5,7 @@ import 'package:nativestore/config.dart';
 import 'package:nativestore/homepage.dart';
 import 'package:nativestore/loginout/customerregistration.dart';
 import 'package:nativestore/loginout/shopregistration.dart';
+import 'package:nativestore/shophomepage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Role extends StatefulWidget {
@@ -14,7 +15,25 @@ class Role extends StatefulWidget {
   _RoleState createState() => _RoleState();
 }
 
+bool sReg;
+bool cReg;
+
 class _RoleState extends State<Role> {
+  getSp() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      sReg = pref.getBool('isShopReg');
+      cReg = pref.getBool('isCustReg');
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getSp();
+  }
+
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
@@ -80,12 +99,12 @@ class _RoleState extends State<Role> {
                       .collection('Type')
                       .document('${widget.usern.email}')
                       .setData({"type": 1});
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => ShopReg(
-                                username: widget.usern,
-                              )));
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (BuildContext context) {
+                    return ShopReg(
+                      username: widget.usern,
+                    );
+                  }));
                 },
                 child: Container(
                   height: 150,
@@ -122,12 +141,12 @@ class _RoleState extends State<Role> {
                       .collection('Type')
                       .document('${widget.usern.email}')
                       .setData({"type": 2});
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => CustReg(
-                                username: widget.usern,
-                              )));
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (BuildContext context) {
+                    return CustReg(
+                      username: widget.usern,
+                    );
+                  }));
                 },
                 child: Container(
                   height: 150,

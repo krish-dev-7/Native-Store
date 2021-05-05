@@ -15,6 +15,8 @@ class ShopHomePage extends StatefulWidget {
 }
 
 String userEmail;
+String picUrl;
+String sUserName;
 
 class _ShopHomePageState extends State<ShopHomePage> {
   @override
@@ -23,6 +25,8 @@ class _ShopHomePageState extends State<ShopHomePage> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     setState(() {
       userEmail = pref.getString('_spemail');
+      picUrl = pref.getString('pic_Url');
+      sUserName = pref.getString('cust_name');
     });
   }
 
@@ -57,6 +61,7 @@ class _ShopHomePageState extends State<ShopHomePage> {
           onPressed: () {
             _auth.logOut();
             _auth.signOut();
+            Navigator.of(context).pop();
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
@@ -72,10 +77,49 @@ class _ShopHomePageState extends State<ShopHomePage> {
     );
   }
 
+  Widget _buildDelDialog(BuildContext context) {
+    return new AlertDialog(
+      title: const Text('Are you sure to delete?'),
+      actions: <Widget>[
+        new FlatButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          textColor: Theme.of(context).primaryColor,
+          child: const Icon(Icons.arrow_back),
+        ),
+        new FlatButton(
+          onPressed: () {
+            _auth.signOut();
+            _auth.logOut();
+            Firestore.instance
+                .collection('shopkeepers')
+                .document(userEmail)
+                .delete()
+                .whenComplete(() {
+              Navigator.of(context).pop();
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => routePage()));
+            });
+          },
+          textColor: Theme.of(context).primaryColor,
+          child: const Icon(
+            Icons.delete_forever_rounded,
+            color: Colors.red,
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          iconTheme: IconThemeData(color: dc),
           backgroundColor: pc,
           centerTitle: true,
           title: Text(
@@ -83,21 +127,137 @@ class _ShopHomePageState extends State<ShopHomePage> {
             style:
                 TextStyle(color: dc, fontSize: 25, fontStyle: FontStyle.italic),
           ),
-          actions: [
-            IconButton(
-              icon: Icon(
-                Icons.logout,
-                color: dc,
-              ),
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) =>
-                        _buildLogoutDialog(context));
-              },
-            ),
-          ],
         ),
+        drawer: Drawer(
+            child: Container(
+          color: pc,
+          child: ListView(
+            children: <Widget>[
+              ListTile(
+                leading: CircleAvatar(
+                    backgroundImage: NetworkImage((picUrl != null)
+                        ? picUrl
+                        : "https://firebasestorage.googleapis.com/v0/b/native-store-c3ca3.appspot.com/o/Drawing-1.sketchpad%20(1).png?alt=media&token=d544c748-938a-43ae-bb91-372362383974")),
+                title: Text(sUserName),
+                subtitle: Text(userEmail),
+              ),
+              sph,
+              ListTile(
+                leading: Icon(Icons.logout),
+                title: Text("Logout"),
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          _buildLogoutDialog(context));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.delete_forever_rounded),
+                title: Text("Delete my Account"),
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          _buildDelDialog(context));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.info),
+                title: Text("Contact Us"),
+                onTap: () {
+                  showModalBottomSheet<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Container(
+                          color: Colors.black87,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              RichText(
+                                text: TextSpan(
+                                    text: "Mail :",
+                                    style: TextStyle(
+                                        fontSize: 25, color: Color(0xFFE50914)),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: " krish0cyber@gmail.com",
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            color: Color(0xFFE50914),
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: "Developer :",
+                                    style: TextStyle(
+                                        fontSize: 25, color: Color(0xFFE50914)),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: " Krishna Sundar\n\n",
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            color: Color(0xFFE50914),
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: "Instagram:",
+                                    style: TextStyle(
+                                        fontSize: 25, color: Color(0xFFE50914)),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: " krish_krush",
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            color: Color(0xFFE50914),
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: "Youtube:",
+                                    style: TextStyle(
+                                        fontSize: 25, color: Color(0xFFE50914)),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: " code with krish",
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            color: Color(0xFFE50914),
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: "Github:",
+                                    style: TextStyle(
+                                        fontSize: 25, color: Color(0xFFE50914)),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: " github.com/krish-dev-7",
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            color: Color(0xFFE50914),
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ]),
+                              ),
+                            ],
+                          ),
+                        );
+                      });
+                },
+              ),
+            ],
+          ),
+        )),
         bottomNavigationBar: CurvedNavigationBar(
           backgroundColor: dc,
           animationDuration: Duration(milliseconds: 500),
@@ -319,106 +479,120 @@ class _AddItemState extends State<AddItem> {
                 if (userDocument['items'] == null) {
                   return Text("No items added");
                 }
-                return Column(
-                  children: <Widget>[
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white70,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black54,
-                              offset: Offset(20, 8),
-                              spreadRadius: 3,
-                              blurRadius: 25),
-                          BoxShadow(
-                              color: Colors.black54,
-                              offset: Offset(-3, -4),
-                              spreadRadius: -2,
-                              blurRadius: 20)
-                        ],
-                      ),
-                      height: 70,
-                      width: 400,
-                      child: Center(
-                        child: Text(
-                          userDocument['Shop Name'],
-                          style: TextStyle(
-                              color: dc,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold),
+                try {
+                  return Column(
+                    children: <Widget>[
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white70,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black54,
+                                offset: Offset(20, 8),
+                                spreadRadius: 3,
+                                blurRadius: 25),
+                            BoxShadow(
+                                color: Colors.black54,
+                                offset: Offset(-3, -4),
+                                spreadRadius: -2,
+                                blurRadius: 20)
+                          ],
+                        ),
+                        height: 70,
+                        width: 400,
+                        child: Center(
+                          child: Text(
+                            userDocument['Shop Name'],
+                            style: TextStyle(
+                                color: dc,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
-                    ),
-                    sph,
-                    sph,
-                    sph,
-                    Container(
-                      height: 550,
-                      child: new ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: userDocument['items'].length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            color: pc,
-                            child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    userDocument['items'].keys.elementAt(index),
-                                    style: TextStyle(color: dc, fontSize: 25),
-                                  ),
-                                  Row(
-                                    children: [
-                                      FlatButton(
-                                        color: dc.withOpacity(0.3),
-                                        onPressed: () {
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) =>
-                                                _buildEditDialog(
-                                                    context,
-                                                    userDocument['items']
-                                                        .keys
-                                                        .elementAt(index)),
-                                          );
-                                        },
-                                        child: Text(
-                                          userDocument['items']
-                                              .values
-                                              .elementAt(index),
-                                          style: TextStyle(
-                                              color: dc, fontSize: 25),
-                                        ),
-                                      ),
-                                      IconButton(
-                                          icon: Icon(Icons.delete_forever),
+                      sph,
+                      sph,
+                      sph,
+                      Container(
+                        height: 550,
+                        child: new ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: userDocument['items'].length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              color: pc,
+                              child: Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      userDocument['items']
+                                          .keys
+                                          .elementAt(index),
+                                      style: TextStyle(color: dc, fontSize: 20),
+                                    ),
+                                    Row(
+                                      children: [
+                                        FlatButton(
+                                          color: dc.withOpacity(0.3),
                                           onPressed: () {
                                             showDialog(
                                               context: context,
                                               builder: (BuildContext context) =>
-                                                  _buildDelDialog(
+                                                  _buildEditDialog(
                                                       context,
                                                       userDocument['items']
                                                           .keys
                                                           .elementAt(index)),
                                             );
-                                          })
-                                    ],
-                                  ),
-                                ],
+                                          },
+                                          child: Text(
+                                            userDocument['items']
+                                                .values
+                                                .elementAt(index),
+                                            style: TextStyle(
+                                                color: dc, fontSize: 25),
+                                          ),
+                                        ),
+                                        IconButton(
+                                            icon: Icon(Icons.delete_forever),
+                                            onPressed: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (BuildContext
+                                                        context) =>
+                                                    _buildDelDialog(
+                                                        context,
+                                                        userDocument['items']
+                                                            .keys
+                                                            .elementAt(index)),
+                                              );
+                                            })
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                } catch (e) {
+                  return Container(
+                    child: Center(
+                      child: Text(
+                        "Re-login needed, Kindly give correct info while registering",
+                        style: TextStyle(color: pc),
                       ),
                     ),
-                  ],
-                );
+                  );
+                }
               })
         ],
       ),
@@ -432,6 +606,7 @@ class ShowOrders extends StatefulWidget {
 }
 
 class _ShowOrdersState extends State<ShowOrders> {
+  String currCustEmail;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -456,6 +631,9 @@ class _ShowOrdersState extends State<ShowOrders> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () async {
+                    setState(() {
+                      currCustEmail = orderedUsers.documents[index]['email'];
+                    });
                     showDialog<void>(
                       context: context,
                       barrierDismissible: false, // user must tap button!
@@ -476,7 +654,7 @@ class _ShowOrdersState extends State<ShowOrders> {
                                     'Number : ${orderedUsers.documents[index]['number']}'),
                                 sph,
                                 Text(
-                                  "email : ${orderedUsers.documents[index]['email']}",
+                                  "email : $currCustEmail}",
                                 ),
                                 sph,
                                 sph,
@@ -491,8 +669,25 @@ class _ShowOrdersState extends State<ShowOrders> {
                           ),
                           actions: <Widget>[
                             TextButton(
-                              child: Text('ok'),
+                              child: Text('ok, back'),
                               onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            TextButton(
+                              child: Text(
+                                'ok, close order',
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              onPressed: () {
+                                Firestore.instance
+                                    .collection('shopkeepers')
+                                    .document(userEmail)
+                                    .collection('ordered-customers')
+                                    .document(currCustEmail)
+                                    .delete();
                                 Navigator.of(context).pop();
                               },
                             ),

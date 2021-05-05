@@ -50,6 +50,7 @@ class loginPageState extends State<loginPage> {
                                 await SharedPreferences.getInstance();
                             prefs.setString('_spemail', value.email);
                             prefs.setString('cust_name', value.displayName);
+                            await prefs.setString('pic_Url', value.photoUrl);
                             y = await Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(

@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:nativestore/config.dart';
 import 'package:nativestore/database/add_get.dart';
 import 'package:nativestore/location_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../shophomepage.dart';
 
@@ -243,8 +244,12 @@ class _ShopRegState extends State<ShopReg> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: OutlineButton(
-                    onPressed: () {
-                      print(widget.pos);
+                    onPressed: () async {
+                      SharedPreferences pref =
+                          await SharedPreferences.getInstance();
+                      pref.setBool('isShopReg', true);
+                      print(
+                          "email in shopreg reg --> ${widget.username.email}");
                       setState(() {
                         UserManagement().shopAddNewUser(
                             widget.pos,

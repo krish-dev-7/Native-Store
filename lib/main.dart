@@ -64,7 +64,6 @@ class routePageState extends State<routePage> {
     });
   }
 
-  // var Utype = GetUserType(type:"ko")
   @override
   Widget build(BuildContext context) {
     return isLoggedin == true

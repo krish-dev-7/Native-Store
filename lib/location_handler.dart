@@ -20,7 +20,8 @@ class LocationGetter extends StatefulWidget {
 
 class _LocationGetterState extends State<LocationGetter> {
   Position _currentPosition;
-  String _currentAddress = " Tap > ";
+  String _currentAddress =
+      " You must register while Your in shop to get shop's location.If your in shop then tap the Icon ";
   var lat, long;
   @override
   Widget build(BuildContext context) {
@@ -137,7 +138,8 @@ class CustLocationGetter extends StatefulWidget {
 
 class _CustLocationGetterState extends State<CustLocationGetter> {
   Position _currentPosition;
-  String _currentAddress = " Tap > ";
+  String _currentAddress =
+      "  You must register while Your in shop\n to get shop's location\n.If your in shop then tap the Icon ";
   var lat, long;
   @override
   Widget build(BuildContext context) {
@@ -170,8 +172,7 @@ class _CustLocationGetterState extends State<CustLocationGetter> {
                 // "k",
                 style: TextStyle(
                     color: dc,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
+                    fontSize: 10,
                     decoration: TextDecoration.underline),
               ),
             OutlineButton(

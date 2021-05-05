@@ -29,6 +29,8 @@ String long;
 String number;
 
 class _CustRegState extends State<CustReg> {
+  bool _isFormFilled = false;
+  String stringValidator(str) {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +69,7 @@ class _CustRegState extends State<CustReg> {
                 },
                 decoration: InputDecoration(
                   labelText: "Name",
+                  errorText: _isFormFilled ? "Name can't be empty" : null,
                   fillColor: dc,
                   focusedBorder: OutlineInputBorder(
                     borderSide:
@@ -102,6 +105,7 @@ class _CustRegState extends State<CustReg> {
                 },
                 decoration: InputDecoration(
                   labelText: "Number",
+                  errorText: _isFormFilled ? "Number can't be empty" : null,
                   fillColor: dc,
                   focusedBorder: OutlineInputBorder(
                     borderSide:
@@ -119,28 +123,39 @@ class _CustRegState extends State<CustReg> {
                 width: 120,
                 child: OutlineButton(
                   onPressed: () async {
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                    prefs.setString('cust_number', number);
-                    prefs.setString('cust_Oname', name);
-                    print(widget.pos);
                     setState(() {
-                      print("-->${widget.username.email}");
-                      UserManagement().custAddNewUser(
-                        widget.pos,
-                        widget.address,
-                        widget.username,
-                        name,
-                        number,
-                        context,
-                      );
+                      name == null
+                          ? _isFormFilled = true
+                          : _isFormFilled = false;
+                      number == null
+                          ? _isFormFilled = true
+                          : _isFormFilled = false;
                     });
-                    Future.delayed(Duration.zero, () {
-                      Navigator.pushReplacement(
+                    if (_isFormFilled == false) {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.setString('cust_number', number);
+                      prefs.setString('cust_Oname', name);
+                      prefs.setBool('isCustReg', true);
+                      print(widget.pos);
+                      setState(() {
+                        print("-->${widget.username.email}");
+                        UserManagement().custAddNewUser(
+                          widget.pos,
+                          widget.address,
+                          widget.username,
+                          name,
+                          number,
                           context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => HomePage()));
-                    });
+                        );
+                      });
+                      Future.delayed(Duration.zero, () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) => HomePage()));
+                      });
+                    }
                   },
                   child: Text(
                     "Register",
