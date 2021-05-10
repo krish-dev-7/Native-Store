@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'config.dart';
 import 'loginout/auth.dart';
-import 'loginout/loginpage.dart';
 import 'main.dart';
 
 class ShopHomePage extends StatefulWidget {
@@ -271,7 +269,7 @@ class _ShopHomePageState extends State<ShopHomePage> {
               color: dc,
             ),
             Icon(
-              Icons.list,
+              Icons.people,
               size: 35,
               color: dc,
             ),
@@ -295,11 +293,12 @@ class _AddItemState extends State<AddItem> {
       title: const Text('Add Items'),
       content: new Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(" Enter Details "),
           new TextField(
-            decoration: InputDecoration(hintText: "Items"),
+            decoration: InputDecoration(
+                labelText: "Items", hintText: "example: ball 30.rs"),
             onChanged: (val) {
               setState(() {
                 additName = val;
@@ -307,7 +306,8 @@ class _AddItemState extends State<AddItem> {
             },
           ),
           new TextField(
-            decoration: InputDecoration(hintText: "Quantity"),
+            decoration:
+                InputDecoration(hintText: "5 pieces", labelText: "Quantity"),
             onChanged: (val) {
               setState(() {
                 quantity = val;
@@ -418,7 +418,7 @@ class _AddItemState extends State<AddItem> {
       width: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           sph,
           sph,
@@ -460,7 +460,7 @@ class _AddItemState extends State<AddItem> {
                 ],
               ),
               height: 50,
-              width: 200,
+              width: 150,
             ),
           ),
           sph,
@@ -514,71 +514,76 @@ class _AddItemState extends State<AddItem> {
                       sph,
                       sph,
                       sph,
-                      Container(
-                        height: 550,
-                        child: new ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: userDocument['items'].length,
-                          itemBuilder: (context, index) {
-                            return Card(
-                              color: pc,
-                              child: Padding(
-                                padding: EdgeInsets.all(10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      userDocument['items']
-                                          .keys
-                                          .elementAt(index),
-                                      style: TextStyle(color: dc, fontSize: 20),
-                                    ),
-                                    Row(
-                                      children: [
-                                        FlatButton(
-                                          color: dc.withOpacity(0.3),
-                                          onPressed: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) =>
-                                                  _buildEditDialog(
-                                                      context,
-                                                      userDocument['items']
-                                                          .keys
-                                                          .elementAt(index)),
-                                            );
-                                          },
-                                          child: Text(
-                                            userDocument['items']
-                                                .values
-                                                .elementAt(index),
-                                            style: TextStyle(
-                                                color: dc, fontSize: 25),
-                                          ),
-                                        ),
-                                        IconButton(
-                                            icon: Icon(Icons.delete_forever),
+                      SingleChildScrollView(
+                        child: Container(
+                          height: 300,
+                          child: new ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: userDocument['items'].length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                color: pc,
+                                child: Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        userDocument['items']
+                                            .keys
+                                            .elementAt(index),
+                                        style:
+                                            TextStyle(color: dc, fontSize: 20),
+                                      ),
+                                      Row(
+                                        children: [
+                                          FlatButton(
+                                            color: dc.withOpacity(0.3),
                                             onPressed: () {
                                               showDialog(
                                                 context: context,
                                                 builder: (BuildContext
                                                         context) =>
-                                                    _buildDelDialog(
+                                                    _buildEditDialog(
                                                         context,
                                                         userDocument['items']
                                                             .keys
                                                             .elementAt(index)),
                                               );
-                                            })
-                                      ],
-                                    ),
-                                  ],
+                                            },
+                                            child: Text(
+                                              userDocument['items']
+                                                  .values
+                                                  .elementAt(index),
+                                              style: TextStyle(
+                                                  color: dc, fontSize: 25),
+                                            ),
+                                          ),
+                                          IconButton(
+                                              icon: Icon(Icons.delete_forever),
+                                              onPressed: () {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (BuildContext
+                                                          context) =>
+                                                      _buildDelDialog(
+                                                          context,
+                                                          userDocument['items']
+                                                              .keys
+                                                              .elementAt(
+                                                                  index)),
+                                                );
+                                              })
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ],

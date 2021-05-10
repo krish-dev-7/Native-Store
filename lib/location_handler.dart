@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nativestore/config.dart';
-import 'package:nativestore/loginout/shopregistration.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocationGetter extends StatefulWidget {
@@ -20,8 +19,7 @@ class LocationGetter extends StatefulWidget {
 
 class _LocationGetterState extends State<LocationGetter> {
   Position _currentPosition;
-  String _currentAddress =
-      " You must register while Your in shop to get shop's location.If your in shop then tap the Icon ";
+  String _currentAddress = " must tap to get location  ";
   var lat, long;
   @override
   Widget build(BuildContext context) {
@@ -83,20 +81,6 @@ class _LocationGetterState extends State<LocationGetter> {
     ]);
   }
 
-  _getCurrentLocation() {
-    Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.best,
-            forceAndroidLocationManager: true)
-        .then((Position position) {
-      setState(() {
-        _currentPosition = position;
-        _getAddressFromLatLng();
-      });
-    }).catchError((e) {
-      print(e);
-    });
-  }
-
   _getAddressFromLatLng() async {
     try {
       List<Placemark> placemarks = await placemarkFromCoordinates(
@@ -138,8 +122,7 @@ class CustLocationGetter extends StatefulWidget {
 
 class _CustLocationGetterState extends State<CustLocationGetter> {
   Position _currentPosition;
-  String _currentAddress =
-      "  You must register while Your in shop\n to get shop's location\n.If your in shop then tap the Icon ";
+  String _currentAddress = "  Must tap to get location";
   var lat, long;
   @override
   Widget build(BuildContext context) {

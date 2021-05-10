@@ -235,6 +235,10 @@ class _ShopRegState extends State<ShopReg> {
                 ),
               ),
             ),
+            Text(
+              "for confirmation You must register your shop while You're in your shop, so that we get shop's location ",
+              style: TextStyle(color: Colors.red),
+            ),
             LocationGetter(
               user: widget.username,
             ),
