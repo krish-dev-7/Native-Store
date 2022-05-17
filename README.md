@@ -11,5 +11,5 @@ USERS:
  --> shopkeepers => to edit items to database and provide items to customers
  --> customers => choose shops from map, or list of shops and order the items there by single click !
 
-- [INSTAGRAM](https://instagram.com/krish_krush)
+- [INSTAGRAM](https://instagram.com/_.krisxh._)
 
